@@ -1,5 +1,7 @@
 export async function onRequest(context) {
-    const appStore = "https://www.perplexity.ai/search/?q=whos+the+richest+person+in+the+world";
-    const statusCode = 302;
-    return Response.redirect(appStore, statusCode);
+    const { request, env } = context;
+    const { searchParams } = new URL(request.url)
+    let q = searchParams.get('q')
+    const url = `https://www.perplexity.ai/search/?q=${encodeURIComponent(q)}`
+    return Response.redirect(url, 302);
 }
